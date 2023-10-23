@@ -9,9 +9,9 @@ type GuessResponsesProps = {
 const GuessResponses: React.FC<GuessResponsesProps> = ({onTooHigh, onTooLow, onCorrect}) => {
     return (
         <div>
-            <button onClick={onTooHigh}>Too High</button>
-            <button onClick={onCorrect}>Correct</button>
-            <button onClick={onTooLow}>Too Low</button>
+            <button className='m0-10' onClick={onTooHigh}>Too High</button>
+            <button className='m0-10' onClick={onCorrect}>Correct</button>
+            <button className='m0-10' onClick={onTooLow}>Too Low</button>
         </div>
     )
 }

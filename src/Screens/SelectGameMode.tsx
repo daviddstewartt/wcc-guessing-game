@@ -4,9 +4,7 @@ import { GoNumber } from 'react-icons/go';
 import { RiComputerFill } from 'react-icons/ri';
 import Box from '../Components/Box';
 
-type Props = {}
-
-const SelectGameMode = (props: Props) => {
+const SelectGameMode = () => {
 	let navigate = useNavigate();
 	const [gameModeId, setGameModeId] = useState<number>(1);
 
