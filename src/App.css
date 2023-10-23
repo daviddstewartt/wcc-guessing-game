@@ -1,9 +1,26 @@
 .App {
   display: flex;
+  flex: 1;
+  flex-direction: column;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  text-align: center; */
+}
+.gamemode-container{
+  padding: 25px 10px;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
   text-align: center;
 }
 
@@ -38,4 +55,8 @@ button {
 .box.active {
   border-color: #797676;
   background-color: #b1b1b1;
+}
+
+.box.light {
+  border-color: #2dc8c850;
 }

@@ -9,7 +9,7 @@ const SelectGameMode = () => {
 	const [gameModeId, setGameModeId] = useState<number>(1);
 
     return (
-        <div>
+        <div className='main-container'>
             <h1>Guessing Game</h1>
 			<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', margin: '20px 0'}}>
 				<Box highlight={gameModeId === 1} onClick={() => setGameModeId(1)}>
