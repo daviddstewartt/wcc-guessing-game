@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SubmitGuessNumber from '../Components/SubmitGuessNumber'
 import GuessResponses from '../Components/GuessResponses'
+import Success from '../Components/Success'
 
 type GameMode1Props = {}
 
@@ -8,6 +9,7 @@ const GameMode1: React.FC<GameMode1Props> = ({}) => {
     const [playerGuessNumber, setPlayerNumber] = useState<number|null>(null);
     const [computerGuessNumber, setComputerGuessNumber] = useState<number|null>(null);
     const [numberOfAttempts, setNumberOfAttempts] = useState<number>(0);
+    const [computerGuessCorrect, setComputerGuessCorrect] = useState<boolean>(false); // user to determine whether the computers guess is correct
 
     // Setting the computer guess bounds
     const [guessUpperLimit, setGuessUpperLimit] = useState<number>(10000);
@@ -19,9 +21,7 @@ const GameMode1: React.FC<GameMode1Props> = ({}) => {
         setNumberOfAttempts(numberOfAttempts + 1);
     }
 
-    /**
-     * When the players guess are too high or low, adjust the guess bounds
-     */
+    /** When the players guess are too high or low, adjust the guess bounds */
     const onGuessTooHigh = () => {
         setGuessUpperLimit(computerGuessNumber!);
         generateNumberBetweenBounds(guessLowerLimit, computerGuessNumber!);
@@ -31,10 +31,11 @@ const GameMode1: React.FC<GameMode1Props> = ({}) => {
         generateNumberBetweenBounds(computerGuessNumber!, guessUpperLimit);
     }
 
-    /**
-     * When the player guess is correct, reset the game
-     */
-    const onGuessCorrect = () => {}
+    /** When the player guess is correct, show success and reset the game */
+    const onGuessCorrect = () => {
+        setComputerGuessCorrect(true);
+
+    }
 
     /** When tthe player guess number is created, automatically 
      * generate a computer guess number between 1 and 10,000
@@ -48,15 +49,22 @@ const GameMode1: React.FC<GameMode1Props> = ({}) => {
 
     return (
         <div>
-            {playerGuessNumber && <p>players number is[debug]: {playerGuessNumber}</p>}
-            {playerGuessNumber && <p>computer guess bounds[debug]: {guessLowerLimit} {guessUpperLimit}</p>}
-            {!playerGuessNumber && <SubmitGuessNumber onGuessNumber={(number) => setPlayerNumber(number)} />}
-            
-            {playerGuessNumber && (
+            {computerGuessCorrect && (<Success numberOfAttempts={numberOfAttempts} />)}
+
+            {!computerGuessCorrect && (
                 <>
-                    <p>Number of attempts: {numberOfAttempts}</p>
-                    <p>Computer guesses you number is: {computerGuessNumber}</p>
-                    <GuessResponses onTooHigh={() => onGuessTooHigh()} onTooLow={() => onGuessTooLow()} onCorrect={() => onGuessCorrect()} />
+                    {playerGuessNumber && <p>players number is[debug]: {playerGuessNumber}</p>}
+                    {playerGuessNumber && <p>computer guess bounds[debug]: {guessLowerLimit} {guessUpperLimit}</p>}
+                    
+                    {!playerGuessNumber && <SubmitGuessNumber onGuessNumber={(number) => setPlayerNumber(number)} />}
+                    
+                    {playerGuessNumber && (
+                        <>
+                            <p>Number of attempts: {numberOfAttempts}</p>
+                            <p>Computer guesses you number is: {computerGuessNumber}</p>
+                            <GuessResponses onTooHigh={() => onGuessTooHigh()} onTooLow={() => onGuessTooLow()} onCorrect={() => onGuessCorrect()} />
+                        </>
+                    )}
                 </>
             )}
         </div>
