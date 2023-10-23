@@ -5,6 +5,7 @@ import './App.css';
 // Screens
 import SelectGameMode from './Screens/SelectGameMode';
 import GameMode1 from './Screens/GameMode1';
+import GameMode2 from './Screens/GameMode2';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<SelectGameMode />}/>
 					<Route path="/mode/1" element={<GameMode1 />}/>
+					<Route path="/mode/2" element={<GameMode2 />}/>
 				</Routes>
 			</BrowserRouter>
 		</div>
