@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 
 type SubmitGuessNumberProps = {
-    onGuessNumber: (number: number) => void
+    onGuessNumber: (number: number) => void;
+    upperLimit: number;
+    lowerLimit: number;
 }
 
-const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({onGuessNumber}) => {
+const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({onGuessNumber, upperLimit, lowerLimit}) => {
     const [inputError, setInputError] = useState<string>('')
     const [guessNumber, setGuessNumber] = useState<number|null>(null);
 
@@ -17,7 +19,7 @@ const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({onGuessNumber}) =>
                 throw new Error('Please enter a number');
             }
 
-            if (numberToGuess < 1 || numberToGuess > 10000) {
+            if (numberToGuess < lowerLimit || numberToGuess > upperLimit) {
                 throw new Error('Please enter a number between 1 and 10,000.');
             }
 
@@ -42,7 +44,7 @@ const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({onGuessNumber}) =>
     return (
         <div>
             <h1>Think of a number</h1>
-            <p>Pick a number between 1 & 10,000</p>
+            <p>Pick a number between {lowerLimit} & {upperLimit}</p>
             <form onSubmit={handleSubmitInput}>
                 <input onChange={onInputChange} type="number" />
                 <button>Submit</button>

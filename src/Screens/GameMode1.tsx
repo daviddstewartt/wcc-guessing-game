@@ -34,7 +34,8 @@ const GameMode1: React.FC<GameMode1Props> = ({}) => {
     /** When the player guess is correct, show success and reset the game */
     const onGuessCorrect = () => {
         setComputerGuessCorrect(true);
-
+        setGuessLowerLimit(1);
+        setGuessUpperLimit(10000);
     }
 
     /** When tthe player guess number is created, automatically 
@@ -53,7 +54,13 @@ const GameMode1: React.FC<GameMode1Props> = ({}) => {
 
             {!computerGuessCorrect && (
                 <>
-                    {!playerGuessNumber && <SubmitGuessNumber onGuessNumber={(number) => setPlayerNumber(number)} />}
+                    {!playerGuessNumber && (
+                        <SubmitGuessNumber 
+                            onGuessNumber={(number) => setPlayerNumber(number)}
+                            upperLimit={guessUpperLimit}
+                            lowerLimit={guessLowerLimit} 
+                        />
+                    )}
                     
                     {playerGuessNumber && (
                         <>
