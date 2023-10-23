@@ -53,9 +53,6 @@ const GameMode1: React.FC<GameMode1Props> = ({}) => {
 
             {!computerGuessCorrect && (
                 <>
-                    {playerGuessNumber && <p>players number is[debug]: {playerGuessNumber}</p>}
-                    {playerGuessNumber && <p>computer guess bounds[debug]: {guessLowerLimit} {guessUpperLimit}</p>}
-                    
                     {!playerGuessNumber && <SubmitGuessNumber onGuessNumber={(number) => setPlayerNumber(number)} />}
                     
                     {playerGuessNumber && (
