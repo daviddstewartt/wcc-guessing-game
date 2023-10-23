@@ -60,7 +60,10 @@ const GameMode1: React.FC<GameMode1Props> = ({}) => {
                     <>
                         {!playerGuessNumber && (
                             <SubmitGuessNumber 
-                                onGuessNumber={(number) => setPlayerNumber(number)}
+                                title='Think of a number'
+                                subtitle={`Pick a number between ${guessLowerLimit} and ${guessUpperLimit}`}
+                                onSubmitNumber={(number) => setPlayerNumber(number)}
+                                buttonText='Submit'
                                 upperLimit={guessUpperLimit}
                                 lowerLimit={guessLowerLimit} 
                             />
