@@ -1,48 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import SubmitGuessNumber from '../Components/SubmitGuessNumber'
+import GuessResponses from '../Components/GuessResponses'
 
 type GameMode1Props = {}
 
 const GameMode1: React.FC<GameMode1Props> = ({}) => {
-    const [inputError, setInputError] = useState<string>('')
-    const [guessNumber, setGuessNumber] = useState<number|null>(null);
+    const [playerGuessNumber, setPlayerNumber] = useState<number|null>(null)
+    const [computerGuessNumber, setComputerGuessNumber] = useState<number|null>(null)
 
-    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        try {
-            const inputNumber = e.target.value;
-            const numberToGuess = parseInt(inputNumber);
+    // Setting the computer guess bounds
+    const [guessUpperLimit, setGuessUpperLimit] = useState<number>(10000);
+    const [guessLowerLimit, setGuessLowerLimit] = useState<number>(1);
 
-            if (isNaN(numberToGuess)) {
-                throw new Error('Please enter a number');
-            }
+    const generateNumberBetweenBounds = (min: number, max: number) => {
+        const guess = Math.floor(Math.random() * (max - min + 1)) + min;
+        setComputerGuessNumber(guess);
+    }
 
-            if (numberToGuess < 1 || numberToGuess > 10000) {
-                throw new Error('Please enter a number between 1 and 10,000.');
-            }
-
-            if (inputError) setInputError(''); // clear error message
-            setGuessNumber(numberToGuess);
-        } catch (error: any) {
-            console.log(error);
-            setInputError(error.message);
+    /** When tthe player guess number is created, automatically 
+     * generate a computer guess number between 1 and 10,000
+     */
+    useEffect(() => {
+        if (playerGuessNumber) {
+            generateNumberBetweenBounds(guessLowerLimit, guessUpperLimit);
         }
-        
-    }
-
-    const handleSubmitInput = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (inputError) return; // if there is an error, don't submit the form
-    }
+    }, [playerGuessNumber])
 
     return (
         <div>
-            <h1>Think of a number</h1>
-            <p>Pick a number between 1 & 10,000</p>
-            <form onSubmit={handleSubmitInput}>
-                <input onChange={onInputChange} type="number" />
-                <button>Submit</button>
-                <p>{inputError}</p>
-            </form>
+            {!playerGuessNumber && <SubmitGuessNumber onGuessNumber={(number) => setPlayerNumber(number)} />}
+            
+            {playerGuessNumber && (
+                <>
+                    <p>Computer guesses you number is: {computerGuessNumber}</p>
+                    <GuessResponses onTooHigh={() => {}} onTooLow={() => {}} onCorrect={() => {}} />
+                </>
+            )}
         </div>
     )
 }
