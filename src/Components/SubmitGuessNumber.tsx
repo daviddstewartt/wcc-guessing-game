@@ -24,7 +24,6 @@ const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({onGuessNumber}) =>
             if (inputError) setInputError(''); // clear error message
             setGuessNumber(numberToGuess);
         } catch (error: any) {
-            console.log(error);
             setInputError(error.message);
         }
         
