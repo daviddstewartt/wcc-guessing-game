@@ -10,8 +10,8 @@ const GuessResponses: React.FC<GuessResponsesProps> = ({onTooHigh, onTooLow, onC
     return (
         <div>
             <button onClick={onTooHigh}>Too High</button>
-            <button onClick={onTooLow}>Correct</button>
-            <button onClick={onCorrect}>Too Low</button>
+            <button onClick={onCorrect}>Correct</button>
+            <button onClick={onTooLow}>Too Low</button>
         </div>
     )
 }
