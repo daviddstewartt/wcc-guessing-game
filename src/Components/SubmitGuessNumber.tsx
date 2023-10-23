@@ -45,7 +45,7 @@ const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({onGuessNumber, upp
         <div>
             <h1>Think of a number</h1>
             <p>Pick a number between {lowerLimit} & {upperLimit}</p>
-            <form onSubmit={handleSubmitInput}>
+            <form onSubmit={handleSubmitInput} style={{display: 'flex', flexDirection: 'column'}}>
                 <input onChange={onInputChange} type="number" />
                 <button>Submit</button>
                 <p>{inputError}</p>
