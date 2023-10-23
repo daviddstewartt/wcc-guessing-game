@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HowToPlay from '../Components/HowToPlay';
 import { generateNumberBetween } from '../Util/helpers';
+import Success from '../Components/Success';
 
 type Props = {}
 
@@ -15,14 +16,7 @@ const GameMode2 = (props: Props) => {
     const [computerResponse, setComputerResponse] = useState<ComputerResponse|null>(null);
     const [numberOfAttempts, setNumberOfAttempts] = useState<number>(0);
     const [inputError, setInputError] = useState<string>('');
-
-    const generateNumberBetweenBounds = (min: number, max: number) => {
-        const target = generateNumberBetween(min, max);
-        // setComputerGuessNumber(guess);
-        // setComputerGuessNumber(guess);
-        setNumberOfAttempts(numberOfAttempts + 1);
-        
-    }
+    const [playerGuessCorrect, setPlayerGuessCorrect] = useState<boolean>(false);
 
     const compareGuessToTarget = (guess: number) => {
         if (guess < targetNumber!) {
@@ -31,6 +25,7 @@ const GameMode2 = (props: Props) => {
             setComputerResponse('too high');
         } else {
             setComputerResponse('correct');
+            setPlayerGuessCorrect(true);
         }
     }
 
@@ -49,7 +44,7 @@ const GameMode2 = (props: Props) => {
 
 
             if (inputError) setInputError(''); // clear error message
-            setComputerResponse(null); // clear computer response
+            
             setPlayerGuessNumber(guessedNumber);
         } catch (error: any) {
             setInputError(error.message);
@@ -59,12 +54,14 @@ const GameMode2 = (props: Props) => {
 
     const handleSubmitInput = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setComputerResponse(null); // clear computer response
 
         if (inputError) return; // if there is an error, don't submit the form
 
         if (playerGuessNumber === null) return; // if the guess number is null, don't submit the form
 
         compareGuessToTarget(playerGuessNumber);
+        setNumberOfAttempts(numberOfAttempts + 1);
     }
 
     useEffect(() => {
@@ -79,11 +76,20 @@ const GameMode2 = (props: Props) => {
         <div className='gamemode-container'>
             <HowToPlay mode={2} />
             <div className='main-container'>
-                {targetNumber && (
+                {targetNumber && !playerGuessCorrect && (
                     <>
                         <div className='target-number'>
                             <h2>Target Number [debug]: {targetNumber}</h2>
                         </div>
+
+                        <p>Number of attempts: {numberOfAttempts}</p>
+
+                        {computerResponse && (
+                            <div className='computer-response'>
+                                <h2>Computer Response: {computerResponse}</h2>
+                            </div>
+                        
+                        )}
                         <div className='guess-number'>
                             <h2>Guess Number: {playerGuessNumber}</h2>
                         </div>
@@ -95,6 +101,8 @@ const GameMode2 = (props: Props) => {
                         </form>
                     </>
                 )}
+
+                {playerGuessCorrect && <Success gamemode={2} numberOfAttempts={numberOfAttempts} />}
             </div>
         </div>
         
