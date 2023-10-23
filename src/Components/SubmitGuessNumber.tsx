@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 
 type SubmitGuessNumberProps = {
-    onGuessNumber: (number: number) => void;
+    title: string;
+    subtitle: string;
+    onSubmitNumber: (number: number) => void;
+    buttonText?: string;
     upperLimit: number;
     lowerLimit: number;
 }
 
-const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({onGuessNumber, upperLimit, lowerLimit}) => {
+const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({title, subtitle, onSubmitNumber, buttonText, upperLimit, lowerLimit}) => {
     const [inputError, setInputError] = useState<string>('')
     const [guessNumber, setGuessNumber] = useState<number|null>(null);
 
@@ -38,16 +41,16 @@ const SubmitGuessNumber: React.FC<SubmitGuessNumberProps> = ({onGuessNumber, upp
 
         if (guessNumber === null) return; // if the guess number is null, don't submit the form
 
-        onGuessNumber(guessNumber);
+        onSubmitNumber(guessNumber);
     }
 
     return (
         <div>
-            <h1>Think of a number</h1>
-            <p>Pick a number between {lowerLimit} & {upperLimit}</p>
+            <h1>{title}</h1>
+            <p>{subtitle}</p>
             <form onSubmit={handleSubmitInput} style={{display: 'flex', flexDirection: 'column'}}>
                 <input onChange={onInputChange} type="number" />
-                <button>Submit</button>
+                <button>{buttonText}</button>
                 <p>{inputError}</p>
             </form>
         </div>
