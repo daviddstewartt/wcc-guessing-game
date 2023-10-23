@@ -14,7 +14,14 @@ const HowToPlay: React.FC<HowToPlayProps> = ({ mode }) => {
             </div>
             <div className='box light' style={{padding: '10px 15px', textAlign: 'left'}}>
                 {mode === 1 && (
-                    <p>Mode 2 how to play</p>
+                    <div>
+                        <p>Choose a random number</p>
+                        <p>The Computer will try and guess your number</p>
+                        <p>You, the user can supply the following responses: [1] too
+                        low, [2] too high, or [3] correct.</p>
+                        <p>The computer continues guessing until the game guesses you, the players, number
+                        correctly.</p>
+                    </div>
                 )}     
                 {mode === 2 && (
                     <div>
